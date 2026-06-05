@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Sudoku Benchmarking Platform</title>
+  <!-- <link rel="stylesheet" href="style.css"/> -->
+   <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="app">
+
+  <header class="hero">
+    <h1>AI Sudoku Benchmarking Platform</h1>
+    <p>CSC202 AI Project — Algorithm Comparison System</p>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="card">
+
+        <h2>Controls</h2>
+
+        <div class="control-group">
+          <label>Difficulty</label>
+          <select id="difficulty-select">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+            <option value="expert">Expert</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>Algorithm</label>
+          <select id="algo-select">
+            <option value="backtracking">Backtracking</option>
+            <option value="informed">MRV + AC3</option>
+            <option value="forward">Forward Checking</option>
+            <option value="hill">Hill Climbing</option>
+          </select>
+        </div>
+
+        <!-- SPEED CONTROL -->
+        <div class="control-group">
+          <label>Animation Speed</label>
+          <select id="speed">
+            <option value="80">Slow</option>
+            <option value="30" selected>Normal</option>
+            <option value="5">Fast</option>
+          </select>
+        </div>
+
+        <button id="generate-btn" class="btn primary">Generate</button>
+        <button id="solve-btn" class="btn success">Solve</button>
+        <button id="compare-btn" class="btn warning">Compare</button>
+        <button id="clear-btn" class="btn danger">Clear</button>
+
+      </div>
+
+      <div class="card">
+        <h2>Metrics</h2>
+        <p>Time: <span id="time-val">0</span></p>
+        <p>States: <span id="states-val">0</span></p>
+        <p>Backtracks: <span id="backtrack-val">0</span></p>
+      </div>
+
+    </aside>
+
+    <!-- GRID -->
+    <section class="board-area">
+      <div id="sudoku-grid" class="grid"></div>
+    </section>
+
+  </div>
+
+  <!-- TABLE -->
+  <section class="card">
+    <h2>Benchmark</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>Algo</th>
+        <th>Time</th>
+        <th>States</th>
+        <th>Backtracks</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody id="benchmark-body"></tbody>
+    </table>
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

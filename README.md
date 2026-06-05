@@ -73,10 +73,4 @@ http://127.0.0.1:5500
 - If `style.css` does not appear, verify that the browser is loading the file from the same `SudukoUI` folder
 - `solve_forward()` currently uses backtracking logic; you can update it later with a dedicated forward-checking implementation
 
-## Optional C# backend
 
-The repository includes `backend_suduko/` for a separate .NET-based Sudoku backend. The primary frontend currently communicates with the Python FastAPI backend in the repository root.
-
-## License
-
-This project is provided as-is for learning and experimentation.

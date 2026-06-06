@@ -1,10 +1,19 @@
+# Virtual env
 venv/
 SudukoUI/venv/
+
+# Python cache
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+# Environment
 .env
+
+# Temp files
 *.tmp
-*.docx (optional)
-~* files
+~*
+
+# Documents (optional)
+*.docx

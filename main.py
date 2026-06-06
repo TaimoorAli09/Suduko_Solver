@@ -7,7 +7,11 @@ from time import perf_counter
 from solverlogic import SudokuSolver
 from puzzle_generator import PuzzleGenerator
 
+
+
 app = FastAPI()
+
+
 
 # CORS (allow frontend)
 app.add_middleware(
@@ -21,6 +25,7 @@ app.add_middleware(
 # =====================
 # REQUEST MODELS
 # =====================
+
 
 class SudokuRequest(BaseModel):
     board: List[List[int]]
@@ -36,6 +41,7 @@ class GenerateRequest(BaseModel):
 # GENERATE PUZZLE
 # =====================
 
+
 @app.post("/generate")
 def generate_puzzle(req: GenerateRequest):
 
@@ -48,6 +54,7 @@ def generate_puzzle(req: GenerateRequest):
 # =====================
 # SOLVE PUZZLE
 # =====================
+
 
 @app.post("/solve")
 def solve_sudoku(req: SudokuRequest):
@@ -75,6 +82,8 @@ def solve_sudoku(req: SudokuRequest):
 
     end = perf_counter()
 
+    
+
     return {
         "solution": solver.board if success else None,
         "success": success,
@@ -82,14 +91,15 @@ def solve_sudoku(req: SudokuRequest):
         "metrics": {
             "executionTime": end - start,
             "statesExplored": solver.states_explored,
-            "backtracksPerformed": solver.backtracks
-        }
+            "backtracksPerformed": solver.backtracks,
+        },
     }
 
 
 # =====================
 # COMPARE ALGORITHMS
 # =====================
+
 
 @app.post("/compare")
 def compare(req: SudokuRequest):
@@ -114,13 +124,15 @@ def compare(req: SudokuRequest):
 
         end = perf_counter()
 
-        results.append({
-            "algorithm": algo,
-            "executionTime": round(end - start, 5),
-            "statesExplored": solver.states_explored,
-            "backtracks": solver.backtracks,
-            "success": success
-        })
+        results.append(
+            {
+                "algorithm": algo,
+                "executionTime": round(end - start, 5),
+                "statesExplored": solver.states_explored,
+                "backtracks": solver.backtracks,
+                "success": success,
+            }
+        )
 
     return results
 
@@ -128,5 +140,7 @@ def compare(req: SudokuRequest):
 # if __name__ == "__main__":
 #     import uvicorn
 #     uvicorn.run(app)
+
 # # run:
-# uvicorn main:app --reload
+# must bind with port 8000 to match frontend fetch URL
+# uvicorn main:app --reload --port 8000

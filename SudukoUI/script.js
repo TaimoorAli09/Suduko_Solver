@@ -45,7 +45,7 @@ function drawBoard(board) {
 
 // ---------------- RESET COLORS ----------------
 function reset() {
-  document.querySelectorAll(".cell").forEach(c => {
+  document.querySelectorAll(".cell").forEach((c) => {
     c.style.background = "white";
   });
 }
@@ -60,10 +60,9 @@ async function animate(steps) {
 
     inputs[idx].value = s.value === 0 ? "" : s.value;
 
-    inputs[idx].style.background =
-      s.type === "fill" ? "#86efac" : "#fca5a5";
+    inputs[idx].style.background = s.type === "fill" ? "#86efac" : "#fca5a5";
 
-    await new Promise(r => setTimeout(r, speed));
+    await new Promise((r) => setTimeout(r, speed));
   }
 }
 
@@ -75,8 +74,8 @@ async function solve() {
 
   const res = await fetch("http://127.0.0.1:8000/solve", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ board, algorithm, difficulty })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ board, algorithm, difficulty }),
   });
 
   const data = await res.json();
@@ -84,7 +83,6 @@ async function solve() {
   console.log("API RESPONSE:", data); // 🔥 DEBUG (VERY IMPORTANT)
 
   if (data.success) {
-
     reset();
 
     if (data.steps) {
@@ -92,13 +90,13 @@ async function solve() {
     }
 
     document.getElementById("time-val").innerText =
-      data.metrics.executionTime.toFixed(5);
+      data.metrics?.executionTime?.toFixed(5) || 0;
 
     document.getElementById("states-val").innerText =
-      data.metrics.statesExplored;
+      data.metrics?.statesExplored || 0;
 
     document.getElementById("backtrack-val").innerText =
-      data.metrics.backtracksPerformed;
+      data.metrics?.backtracksPerformed || 0;
   }
 }
 
@@ -108,8 +106,8 @@ async function generate() {
 
   const res = await fetch("http://localhost:8000/generate", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ difficulty })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ difficulty }),
   });
 
   const data = await res.json();
@@ -123,8 +121,14 @@ async function compare() {
 
   const res = await fetch("http://127.0.0.1:8000/compare", {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({ board, algorithm: "backtracking", difficulty })
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      board,
+      algorithm: "all",
+      difficulty,
+    }),
   });
 
   const data = await res.json();
@@ -134,14 +138,14 @@ async function compare() {
   const tbody = document.getElementById("benchmark-body");
   tbody.innerHTML = "";
 
-  data.forEach(r => {
+  data.forEach((r) => {
     tbody.innerHTML += `
       <tr>
         <td>${r.algorithm}</td>
-        <td>${r.executionTime}s</td>
+        <td>${r.executionTime.toFixed(5)}s</td>
         <td>${r.statesExplored}</td>
         <td>${r.backtracks}</td>
-        <td>${r.success ? "✅" : "❌"}</td>
+        <td>${r.success ? "✅ Solved" : "❌ Failed"}</td>
       </tr>
     `;
   });

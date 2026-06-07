@@ -401,3 +401,15 @@ td {
     height: 60px;
   }
 }
+
+
+
+table tr:hover {
+  background: rgba(37, 99, 235, 0.08);
+  transition: 0.2s;
+}
+
+td {
+  font-size: 0.95rem;
+  color: #0f172a;
+}

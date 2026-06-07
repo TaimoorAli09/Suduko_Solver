@@ -4,6 +4,9 @@ const solveBtn = document.getElementById("solve-btn");
 const compareBtn = document.getElementById("compare-btn");
 const generateBtn = document.getElementById("generate-btn");
 
+// Store the original puzzle so we can solve it multiple times
+let originalBoard = null;
+
 // ---------------- INIT GRID ----------------
 function init() {
   for (let i = 0; i < 81; i++) {
@@ -68,6 +71,11 @@ async function animate(steps) {
 
 // ---------------- SOLVE ----------------
 async function solve() {
+  // Restore original puzzle before solving
+  if (originalBoard) {
+    drawBoard(originalBoard);
+  }
+
   const board = getBoard();
   const algorithm = document.getElementById("algo-select").value;
   const difficulty = document.getElementById("difficulty-select").value;
@@ -111,11 +119,21 @@ async function generate() {
   });
 
   const data = await res.json();
+  
+  // Store the original puzzle for reuse across algorithms
+  originalBoard = JSON.parse(JSON.stringify(data.board));
+  
   drawBoard(data.board);
+  reset(); // Clear any previous solve colors
 }
 
 // ---------------- COMPARE ----------------
 async function compare() {
+  // Restore original puzzle before comparing
+  if (originalBoard) {
+    drawBoard(originalBoard);
+  }
+
   const board = getBoard();
   const difficulty = document.getElementById("difficulty-select").value;
 
